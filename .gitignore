@@ -1,0 +1,15 @@
+# Datos del negocio: nunca van al repositorio
+datos/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+!tests/fixtures/*.sqlite
+
+# Basura de Windows y de herramientas
+*.stackdump
+*.log
+Thumbs.db
+.claude/
+
+# Lo que se arma (va como versión en GitHub, no en el código)
+*.exe

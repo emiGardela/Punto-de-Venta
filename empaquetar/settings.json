@@ -1,0 +1,63 @@
+{
+    "application": {
+        "single_instance_guid": "6f1c2b7e-8d4a-4c5b-9e0f-7a3d2c1b4e5f",
+        "dpi_aware": true
+    },
+    "debugging": {
+        "show_console": false,
+        "subprocess_show_console": false,
+        "log_level": "ERROR",
+        "log_file": ""
+    },
+    "main_window": {
+        "title": "Punto de venta",
+        "icon": "tiendaweb.ico",
+        "default_size": [1280, 800],
+        "minimum_size": [1024, 640],
+        "maximum_size": [0, 0],
+        "disable_maximize_button": false,
+        "center_on_screen": true,
+        "start_maximized": true,
+        "start_fullscreen": false,
+        "always_on_top": false,
+        "minimize_to_tray": false,
+        "minimize_to_tray_message": ""
+    },
+    "popup_window": {
+        "icon": "tiendaweb.ico",
+        "fixed_title": "",
+        "center_relative_to_parent": true,
+        "default_size": [900, 700]
+    },
+    "web_server": {
+        "listen_on": ["127.0.0.1", 0],
+        "www_directory": "www",
+        "index_files": ["index.php"],
+        "cgi_interpreter": "php/php-cgi.exe",
+        "cgi_extensions": ["php"],
+        "cgi_temp_dir": "",
+        "404_handler": "",
+        "hide_files": []
+    },
+    "chrome": {
+        "log_file": "",
+        "log_severity": "disable",
+        "cache_path": "webcache",
+        "external_drag": false,
+        "external_navigation": true,
+        "reload_page_F5": true,
+        "devtools_F12": false,
+        "remote_debugging_port": 0,
+        "runtime_style": "alloy",
+        "command_line_switches": {"disable-gpu": ""},
+        "enable_downloads": true,
+        "context_menu": {
+            "enable_menu": true,
+            "navigation": true,
+            "print": true,
+            "view_source": false,
+            "open_in_external_browser": false,
+            "devtools": false
+        }
+    }
+}
