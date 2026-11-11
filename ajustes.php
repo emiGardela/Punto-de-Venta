@@ -102,6 +102,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 $aj = ajustes();
                 enviar_a_impresora($accion === 'cajon' ? escpos_cajon($aj['cajon_pin']) : escpos_prueba($aj), $aj);
+                if ($accion === 'probar' && $aj['impresora_probada'] === '') {
+                    guardar_ajustes(['impresora_probada' => date('Y-m-d H:i:s')]);   // "Primeros pasos" lo da por hecho
+                }
                 flash('exito', $accion === 'cajon' ? 'Se mandó la orden para abrir el cajón.' : 'Se mandó la hoja de prueba a la impresora.');
             } catch (RuntimeException $ex) {
                 flash('error', 'Se guardó la configuración, pero: ' . $ex->getMessage());

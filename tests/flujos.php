@@ -10,6 +10,56 @@ declare(strict_types=1);
 $raiz = dirname(__DIR__);
 
 /* ---------------------------------------------------------------------
+ *  Asistente: impresora de tickets.
+ * --------------------------------------------------------------------- */
+$srv = new ServidorPrueba($raiz);
+$nav = new Navegador($srv->url);
+// Una "impresora de red" falsa: solo recibe la conexión en el puerto (basta para que se pueda mandar el ticket).
+$impresoraFalsa = stream_socket_server('tcp://127.0.0.1:0');
+$puertoFalso = (string) parse_url('tcp://' . stream_socket_get_name($impresoraFalsa, false), PHP_URL_PORT);
+try {
+    Pruebas::grupo('Asistente: impresora');
+    $nav->get('index.php');
+    $h = $nav->get('bienvenida.php');
+    Pruebas::verdadero(str_contains($h, 'id="imp_ninguna"') && str_contains($h, 'id="imp_windows"') && str_contains($h, 'id="imp_red"'),
+        'el asistente pregunta si tiene impresora');
+    $base = ['giro' => 'abarrotes', 'negocio_nombre' => 'Abarrotes Lupita', 'productos' => 'ejemplos'];
+    $h = $nav->enviar('bienvenida.php', $base + ['impresora_tipo' => 'red', 'impresora_ip' => 'no-es-ip'], 'bienvenida.php');
+    Pruebas::contiene('dirección IP válida', $h, 'con una IP mal escrita lo avisa');
+    Pruebas::verdadero(str_contains($h, 'value="Abarrotes Lupita"') && (bool) preg_match('/id="imp_red"[^>]*checked/', $h), 'y conserva lo que escribió');
+    Pruebas::igual('', (string) $srv->valor("SELECT valor FROM ajustes WHERE clave = 'primer_uso'"), 'y no termina el asistente');
+
+    $nav->enviar('bienvenida.php', $base + ['impresora_tipo' => 'red', 'impresora_ip' => '127.0.0.1', 'impresora_puerto' => $puertoFalso, 'papel' => '58'], 'bienvenida.php');
+    Pruebas::igual(['red', '127.0.0.1', $puertoFalso, '58'],
+        array_map(fn($c) => $srv->valor('SELECT valor FROM ajustes WHERE clave = :c', [':c' => $c]), ['impresora_tipo', 'impresora_ip', 'impresora_puerto', 'papel']),
+        'guarda la impresora elegida en el asistente');
+    $pantallaInicio = $nav->get('index.php');
+    Pruebas::contiene('Imprime un ticket de prueba', $pantallaInicio, 'Primeros pasos pide imprimir un ticket de prueba');
+
+    $nav->enviar('ajustes.php', ['giro' => 'abarrotes', 'negocio_nombre' => 'Abarrotes Lupita', 'impresora_tipo' => 'red', 'impresora_ip' => '127.0.0.1',
+        'impresora_puerto' => $puertoFalso, 'papel' => '58', 'caracteres' => 'pc850', 'cortar_papel' => '1', 'imprimir_al_cobrar' => 'siempre',
+        'cajon_al_cobrar' => 'efectivo', 'cajon_pin' => '2', 'correo_seguridad' => 'ssl', 'accion' => 'probar', 'seccion' => 'impresora'], 'ajustes.php');
+    Pruebas::verdadero((string) $srv->valor("SELECT valor FROM ajustes WHERE clave = 'impresora_probada'") !== '', 'imprimir la prueba lo anota');
+    Pruebas::verdadero((bool) preg_match('/text-decoration-line-through">Imprime un ticket de prueba</', $nav->get('index.php')),
+        'y Primeros pasos lo da por hecho');
+} finally {
+    fclose($impresoraFalsa);
+    $srv->detener();
+}
+
+$srv = new ServidorPrueba($raiz);
+$nav = new Navegador($srv->url);
+try {
+    Pruebas::grupo('Asistente: sin impresora');
+    $nav->get('index.php');
+    $nav->enviar('bienvenida.php', ['giro' => 'abarrotes', 'negocio_nombre' => 'Abarrotes Lupita', 'productos' => 'ejemplos'], 'bienvenida.php');
+    Pruebas::igual('ninguna', $srv->valor("SELECT valor FROM ajustes WHERE clave = 'impresora_tipo'") ?? 'ninguna', 'sin elegir nada queda sin impresora');
+    Pruebas::verdadero(!str_contains($nav->get('index.php'), 'Imprime un ticket de prueba'), 'y Primeros pasos no pide imprimir');
+} finally {
+    $srv->detener();
+}
+
+/* ---------------------------------------------------------------------
  *  Configuración por secciones.
  * --------------------------------------------------------------------- */
 $srv = new ServidorPrueba($raiz);

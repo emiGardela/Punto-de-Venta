@@ -1,7 +1,8 @@
 <?php
 // SPDX-License-Identifier: GPL-3.0-only
 /**
- * Asistente de primer uso: tipo y nombre del negocio, empezar vacío o con
+ * Asistente de primer uso: tipo y nombre del negocio, impresora de tickets
+ * (opcional), empezar vacío o con
  * productos de ejemplo, y usuario dueño con PIN.
  *
  * Solo aparece en una base sin estrenar (ver necesita_bienvenida()); en una
@@ -19,7 +20,8 @@ $productosActuales = (int) db()->query('SELECT COUNT(*) FROM productos')->fetchC
 $errores = [];
 $sesionVencida = false;
 $form = ['giro' => GIRO_PREDETERMINADO, 'negocio_nombre' => ajuste('negocio_nombre'), 'negocio_datos' => ajuste('negocio_datos'),
-         'productos' => 'vacio', 'proteger' => true, 'nombre' => ''];
+         'productos' => 'vacio', 'proteger' => true, 'nombre' => '',
+         'impresora_tipo' => 'ninguna', 'impresora_nombre' => '', 'impresora_ip' => '', 'impresora_puerto' => '9100', 'papel' => '80'];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Sin token válido no se guarda nada, pero tampoco se tira lo que la persona ya escribió.
@@ -32,6 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'productos'      => in_array($_POST['productos'] ?? '', ['vacio', 'ejemplos', 'conservar'], true) ? $_POST['productos'] : 'vacio',
         'proteger'       => !empty($_POST['proteger']),
         'nombre'         => trim(preg_replace('/\s+/u', ' ', (string) ($_POST['nombre'] ?? '')) ?? ''),
+        'impresora_tipo'   => in_array($_POST['impresora_tipo'] ?? '', ['ninguna', 'windows', 'red'], true) ? $_POST['impresora_tipo'] : 'ninguna',
+        'impresora_nombre' => trim((string) ($_POST['impresora_nombre'] ?? '')),
+        'impresora_ip'     => trim((string) ($_POST['impresora_ip'] ?? '')),
+        'impresora_puerto' => trim((string) ($_POST['impresora_puerto'] ?? '')) ?: '9100',
+        'papel'            => ($_POST['papel'] ?? '80') === '58' ? '58' : '80',
     ];
     $pin = (string) ($_POST['pin'] ?? '');
 
@@ -40,6 +47,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     if (mb_strlen($form['negocio_datos']) > 300) {
         $errores['negocio_datos'] = 'Máximo 300 caracteres.';
+    }
+    if ($form['impresora_tipo'] === 'windows' && ($form['impresora_nombre'] === '' || mb_strlen($form['impresora_nombre']) > 200)) {
+        $errores['impresora_nombre'] = 'Elige tu impresora de tickets (o marca "No tengo" y la eliges después).';
+    }
+    if ($form['impresora_tipo'] === 'red') {
+        if (!filter_var($form['impresora_ip'], FILTER_VALIDATE_IP)) {
+            $errores['impresora_ip'] = 'Escribe una dirección IP válida, por ejemplo 192.168.1.100.';
+        } elseif (!ctype_digit($form['impresora_puerto']) || (int) $form['impresora_puerto'] < 1 || (int) $form['impresora_puerto'] > 65535) {
+            $errores['impresora_ip'] = 'El puerto no es válido (normalmente 9100).';
+        }
     }
     if ($form['proteger']) {
         if ($form['nombre'] === '' || mb_strlen($form['nombre']) > 40) {
@@ -65,6 +82,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'negocio_datos'  => $form['negocio_datos'],
             'primer_uso'     => date('Y-m-d H:i:s'),
         ]);
+        if ($form['impresora_tipo'] !== 'ninguna') {
+            guardar_ajustes([
+                'impresora_tipo'   => $form['impresora_tipo'],
+                'impresora_nombre' => $form['impresora_tipo'] === 'windows' ? $form['impresora_nombre'] : '',
+                'impresora_ip'     => $form['impresora_tipo'] === 'red' ? $form['impresora_ip'] : '',
+                'impresora_puerto' => $form['impresora_tipo'] === 'red' ? $form['impresora_puerto'] : '9100',
+                'papel'            => $form['papel'],
+            ]);
+        }
         if ($form['proteger']) {
             db()->prepare("INSERT INTO usuarios (nombre, pin_hash, rol) VALUES (:nombre, :pin, 'dueno')")
                 ->execute([':nombre' => $form['nombre'], ':pin' => password_hash($pin, PASSWORD_DEFAULT)]);
@@ -80,6 +106,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $invalido = fn(string $c) => isset($errores[$c]) ? ' is-invalid' : '';
 $mensaje  = fn(string $c) => isset($errores[$c]) ? '<div class="invalid-feedback">' . e($errores[$c]) . '</div>' : '';
 $marcado  = fn(string $valor) => $form['productos'] === $valor ? 'checked' : '';
+
+// Impresoras instaladas en Windows (solo se pueden listar en la app de escritorio).
+$impresoras = [];
+try {
+    $impresoras = impresoras_windows();
+} catch (Throwable $ex) {
+    // Desde el navegador no se pueden listar: se elige después en Configuración.
+}
 ?><!doctype html>
 <html lang="es">
 <head>
@@ -95,7 +129,7 @@ $marcado  = fn(string $valor) => $form['productos'] === $valor ? 'checked' : '';
     <div class="text-center mb-4">
         <span class="marca-logo mx-auto mb-3"><i class="bi bi-shop"></i></span>
         <h1 class="h4 fw-bold mb-1">¡Bienvenido a tu punto de venta!</h1>
-        <p class="text-body-secondary mb-0">Cuatro pasos y listo para vender.</p>
+        <p class="text-body-secondary mb-0">Cinco pasos y listo para vender.</p>
     </div>
 
     <?php if ($sesionVencida): ?>
@@ -156,7 +190,46 @@ $marcado  = fn(string $valor) => $form['productos'] === $valor ? 'checked' : '';
             <?php endif; ?>
         </div>
 
-        <h2 class="h6 fw-bold"><span class="badge rounded-pill text-bg-primary me-2">4</span>Tu usuario de dueño</h2>
+        <h2 class="h6 fw-bold"><span class="badge rounded-pill text-bg-primary me-2">4</span>¿Tienes impresora de tickets?</h2>
+        <div class="giros giros-3 mb-2" role="radiogroup" aria-label="Impresora de tickets">
+            <?php foreach (['ninguna' => ['bi-slash-circle', 'No tengo'], 'windows' => ['bi-usb-symbol', 'Sí, USB'], 'red' => ['bi-ethernet', 'Sí, de red']] as $clave => [$icono, $etiqueta]): ?>
+                <input type="radio" class="btn-check" name="impresora_tipo" id="imp_<?= $clave ?>" value="<?= $clave ?>" <?= $form['impresora_tipo'] === $clave ? 'checked' : '' ?>>
+                <label class="btn btn-metodo" for="imp_<?= $clave ?>"><i class="bi <?= $icono ?>"></i><?= $etiqueta ?></label>
+            <?php endforeach; ?>
+        </div>
+        <div class="form-text mb-4" id="impAyudaNinguna">Puedes vender sin impresora. Si después conectas una, la eliges en Configuración.</div>
+        <div class="mb-3 d-none" id="impCamposWindows">
+            <?php if ($impresoras): ?>
+                <select class="form-select<?= $invalido('impresora_nombre') ?>" name="impresora_nombre" aria-label="Impresora">
+                    <option value="">Elige tu impresora de tickets…</option>
+                    <?php foreach ($impresoras as $nombre): ?>
+                        <option value="<?= e($nombre) ?>" <?= $form['impresora_nombre'] === $nombre ? 'selected' : '' ?>><?= e($nombre) ?></option>
+                    <?php endforeach; ?>
+                </select>
+                <?= $mensaje('impresora_nombre') ?>
+            <?php else: ?>
+                <div class="alert alert-warning small mb-0">No encontré impresoras instaladas en Windows. Instálala con el disco o el programa que trae y luego elígela en <strong>Configuración → Impresora y cajón</strong>. Por ahora marca "No tengo".</div>
+                <?php if (isset($errores['impresora_nombre'])): ?><div class="text-danger small mt-1"><?= e($errores['impresora_nombre']) ?></div><?php endif; ?>
+            <?php endif; ?>
+        </div>
+        <div class="row g-2 mb-3 d-none" id="impCamposRed">
+            <div class="col-8">
+                <input type="text" class="form-control<?= $invalido('impresora_ip') ?>" name="impresora_ip" value="<?= e($form['impresora_ip']) ?>" placeholder="Dirección IP, ej. 192.168.1.100" inputmode="decimal" aria-label="Dirección IP">
+                <?= $mensaje('impresora_ip') ?>
+            </div>
+            <div class="col-4">
+                <input type="text" class="form-control" name="impresora_puerto" value="<?= e($form['impresora_puerto']) ?>" inputmode="numeric" aria-label="Puerto" title="Puerto (normalmente 9100)">
+            </div>
+        </div>
+        <div class="mb-4 d-none" id="impPapel">
+            <select class="form-select" name="papel" aria-label="Ancho del papel">
+                <option value="80" <?= $form['papel'] === '80' ? 'selected' : '' ?>>Papel de 80 mm (el más común)</option>
+                <option value="58" <?= $form['papel'] === '58' ? 'selected' : '' ?>>Papel de 58 mm (impresoras pequeñas)</option>
+            </select>
+            <div class="form-text">Al terminar te sugerimos imprimir un ticket de prueba.</div>
+        </div>
+
+        <h2 class="h6 fw-bold"><span class="badge rounded-pill text-bg-primary me-2">5</span>Tu usuario de dueño</h2>
         <div class="form-check form-switch mb-2">
             <input class="form-check-input" type="checkbox" role="switch" id="proteger" name="proteger" value="1" <?= $form['proteger'] ? 'checked' : '' ?>>
             <label class="form-check-label" for="proteger">Pedir un PIN para entrar <span class="text-body-secondary small">(recomendado)</span></label>
@@ -192,6 +265,16 @@ $marcado  = fn(string $valor) => $form['productos'] === $valor ? 'checked' : '';
     };
     sw.addEventListener('change', actualizar);
     actualizar();
+
+    const impresora = () => {
+        const tipo = document.querySelector('input[name="impresora_tipo"]:checked').value;
+        document.getElementById('impAyudaNinguna').classList.toggle('d-none', tipo !== 'ninguna');
+        document.getElementById('impCamposWindows').classList.toggle('d-none', tipo !== 'windows');
+        document.getElementById('impCamposRed').classList.toggle('d-none', tipo !== 'red');
+        document.getElementById('impPapel').classList.toggle('d-none', tipo === 'ninguna');
+    };
+    document.querySelectorAll('input[name="impresora_tipo"]').forEach(t => t.addEventListener('change', impresora));
+    impresora();
 })();
 </script>
 </body>

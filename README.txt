@@ -24,7 +24,7 @@ Ahí se queda aunque se actualice o reinstale el programa.
  y el producto pide solo nombre, precio, código y existencia; lo demás
  está en "Más opciones". Las funciones avanzadas (compras a
  proveedores, listas escolares, paquetes y kits, mayoreo) se prenden en
- Configuración → "Funciones avanzadas". Usuarios, respaldos y bitácora
+ Configuración → "Modo avanzado". Usuarios, respaldos y bitácora
  están dentro de Configuración.
 
  - Punto de venta con lector de códigos de barras, servicios de un
@@ -81,13 +81,18 @@ días y una lista de "Primeros pasos".
    - El nombre del negocio (y datos para el ticket, opcional).
    - Cómo empezar: VACÍO (para la tienda real) o con productos de
      ejemplo de tu giro, todos con IVA 16% (para practicar).
+   - Si tienes impresora de tickets: USB o de red, y el ancho del
+     papel (opcional; se puede poner después en Configuración).
+     Si la eliges, "Primeros pasos" te pide imprimir un ticket de prueba.
    - Tu usuario de dueño con un PIN de 4 a 6 números (recomendado).
      Desde ese momento el sistema pide el PIN al abrirse.
    El asistente solo aparece en un sistema sin estrenar: una vez que
    hay ventas, no se puede volver a abrir.
 
-2. Configuración: si tienes impresora de tickets, elígela ahí y prueba
-   la impresión y el cajón.
+2. Configuración: está por secciones (Mi negocio, Ticket, Impresora y
+   cajón, Correo y Modo avanzado). En "Ticket" ves cómo quedará el
+   ticket mientras escribes. Si tienes impresora, en "Impresora y
+   cajón" prueba la impresión y el cajón.
 
 3. Usuarios: crea a tus cajeros y marca lo que cada uno puede hacer.
 
@@ -189,7 +194,7 @@ días y una lista de "Primeros pasos".
    te dio el SAT: el folio fiscal se lee solo del XML (y revisa que sea
    del RFC correcto). Ahí mismo puedes mandarla por correo al cliente.
  - Mandar por correo: primero configura tu correo en Configuración →
-   "Correo para mandar facturas" (hay botones para Gmail, Outlook y
+   "Correo" (hay botones para Gmail, Outlook y
    Yahoo; Gmail y Yahoo piden una "contraseña de aplicación"). Prueba con
    "Guardar y mandarme un correo de prueba". La contraseña se guarda solo
    en esta computadora y nunca se muestra.
@@ -287,7 +292,7 @@ días y una lista de "Primeros pasos".
  impresora.
 
  1. Instala la impresora en Windows con el driver del fabricante.
- 2. "Configuración" → "USB (instalada en Windows)" → elige la
+ 2. "Configuración" → "Impresora y cajón" → "USB" → elige la
     impresora (o "Cable de red" con su dirección IP, puerto 9100).
  3. "Guardar e imprimir prueba". Si salen signos raros en vez de
     acentos, cambia "Acentos y ñ". Si el cajón no abre, cambia

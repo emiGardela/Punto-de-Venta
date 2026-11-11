@@ -72,6 +72,7 @@ if (permiso('caja')) {
 // Primeros pasos: se esconden solos cuando ya se hicieron todos.
 $pasos = [
     ['Ponle nombre a tu negocio', ajuste('negocio_nombre') !== APP_NEGOCIO, 'ajustes.php', es_dueno()],
+    ['Imprime un ticket de prueba', ajuste('impresora_probada') !== '', 'ajustes.php?s=impresora', es_dueno() && impresora_activa()],
     ['Agrega tus productos', $productosActivos > 0, 'productos/crear.php', permiso('productos')],
     ['Abre la caja con el cambio que tienes', (int) db()->query('SELECT COUNT(*) FROM turnos')->fetchColumn() > 0, 'ventas/index.php', true],
     ['Haz tu primera venta', (int) db()->query("SELECT COUNT(*) FROM ventas")->fetchColumn() > 0, 'ventas/index.php', true],

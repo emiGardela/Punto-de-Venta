@@ -33,6 +33,7 @@ const AJUSTES_PREDETERMINADOS = [
     'imprimir_al_cobrar' => 'siempre',                // siempre | preguntar
     'cajon_al_cobrar'    => 'efectivo',               // efectivo | siempre | nunca
     'cajon_pin'          => '2',                      // 2 | 5 (conector del cajón)
+    'impresora_probada'  => '',                       // fecha de la primera prueba que salió bien ('' = nunca)
 
     // Correo para mandar facturas (SMTP). La contraseña se guarda solo en esta computadora.
     'correo_servidor'    => '',
