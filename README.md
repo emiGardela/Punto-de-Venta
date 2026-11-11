@@ -73,3 +73,11 @@ El instalador listo para usar se publica en [Releases](../../releases).
 ## Manual
 
 El manual completo de uso, instalación y mantenimiento está en [README.txt](README.txt).
+
+## Licencia
+
+Copyright (C) 2026 emiGardela
+
+Este programa es software libre bajo la [GNU General Public License v3.0](LICENSE): puedes usarlo, estudiarlo, modificarlo y distribuirlo, pero cualquier versión modificada que distribuyas también debe publicarse con su código bajo la misma licencia.
+
+Las librerías incluidas en `assets/vendor` (Bootstrap, Bootstrap Icons, Chart.js y SweetAlert2) conservan su propia licencia MIT; cada una trae su archivo `LICENSE.txt`.
