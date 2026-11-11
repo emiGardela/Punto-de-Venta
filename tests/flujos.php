@@ -51,6 +51,14 @@ foreach (GIROS as $clave => $giro) {
         Pruebas::igual(0, (int) $srv->valor("SELECT COUNT(*) FROM productos WHERE tasa_iva <> '16'"), 'todos con IVA 16%');
         Pruebas::igual(count($giro['productos']), (int) $srv->valor('SELECT COUNT(DISTINCT nombre) FROM productos'), 'sin nombres repetidos');
         Pruebas::contiene($giro['categorias'][0], $nav->get('productos/categorias.php'), 'sugiere sus categorías');
+        $plantilla = $nav->get('productos/importar.php?plantilla=1');
+        Pruebas::contiene($giro['productos'][0][0], $plantilla, 'la plantilla de Excel trae ejemplos del giro');
+        if (in_array($clave, ['abarrotes', 'licoreria'], true)) {
+            Pruebas::verdadero(!str_contains($plantilla, 'Cuaderno') && !str_contains($plantilla, 'Lápiz'), 'y no trae ejemplos de papelería');
+        }
+        $antes = (int) $srv->valor('SELECT COUNT(*) FROM productos');
+        $nav->subir('productos/importar.php', [], 'archivo', 'plantilla-productos.csv', $plantilla);
+        Pruebas::igual($antes, (int) $srv->valor('SELECT COUNT(*) FROM productos'), 'importar la plantilla no duplica los ejemplos');
         $nav->enviar('caja/acciones.php', ['accion' => 'abrir', 'fondo' => '0']);
         $pos = $nav->get('ventas/index.php');
         Pruebas::contiene('Más vendidos', $pos, 'la venta muestra los más vendidos');

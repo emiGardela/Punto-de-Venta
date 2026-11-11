@@ -36,11 +36,23 @@ if (isset($_GET['plantilla'])) {
     header('Content-Type: text/csv; charset=utf-8');
     header('Content-Disposition: attachment; filename="plantilla-productos.csv"');
     echo "\xEF\xBB\xBF";   // BOM: Excel abre bien los acentos
-    echo "nombre,codigo_barras,codigo_interno,categoria,marca,unidad,precio,costo,existencia,minimo,servicio,granel,iva,mayoreo_desde,precio_mayoreo,proveedor,descripcion\r\n";
-    echo "Cuaderno profesional raya,7501000000017,CUA-100,Cuadernos y libretas,Scribe,pieza,35,22.50,40,10,no,no,16,12,32,Distribuidora del Centro,100 hojas\r\n";
-    echo "Lápiz grafito No. 2,7501000000024,LAP-2,Escritura,Mirado,pieza,5,2.40,120,20,no,no,16,12,4.50,Distribuidora del Centro,\r\n";
-    echo "Copia blanco y negro,,COP-BN,Copias e impresiones,,servicio,1,,,,si,no,16,100,0.80,,Tamaño carta\r\n";
-    echo "Libro de lecturas 3er grado,,LIB-L3,Libros,,pieza,180,140,5,2,no,no,0,,,,\r\n";
+    // Ejemplos del giro del negocio: uno con código y mayoreo, uno a granel y uno sin inventario (servicio).
+    $giro = giro_actual();
+    $ejemplos = $giro['productos'];
+    $elegidos = array_values(array_filter([
+        $ejemplos[0],
+        current(array_filter($ejemplos, fn($p) => $p[7] === 1)) ?: null,
+        current(array_filter($ejemplos, fn($p) => $p[6] === 0)) ?: null,
+    ]));
+    $salida = fopen('php://output', 'w');
+    fputcsv($salida, ['nombre', 'codigo_barras', 'codigo_interno', 'categoria', 'marca', 'unidad', 'precio', 'costo', 'existencia', 'minimo',
+                      'servicio', 'granel', 'iva', 'mayoreo_desde', 'precio_mayoreo', 'proveedor', 'descripcion'], ',', '"', '', "\r\n");
+    foreach ($elegidos as $i => [$nombre, $codigo, $precio, $costo, $existencia, $minimo, $controla, $granel]) {
+        $mayoreo = $i === 0;
+        fputcsv($salida, [$nombre, $codigo ?? '', '', $giro['categorias'][$i] ?? '', '', $granel ? 'kg' : ($controla ? 'pieza' : 'servicio'),
+                          $precio, $costo ?? '', $controla ? $existencia : '', $controla ? $minimo : '', $controla ? 'no' : 'si', $granel ? 'si' : 'no', '16',
+                          $mayoreo ? 12 : '', $mayoreo ? round($precio * 0.9, 2) : '', '', ''], ',', '"', '', "\r\n");
+    }
     exit;
 }
 
