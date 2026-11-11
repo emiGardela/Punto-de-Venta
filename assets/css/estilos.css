@@ -316,3 +316,35 @@ kbd.atajo { background: #eef2f7; color: var(--tw-texto-suave); border: 1px solid
 .boton-grande.principal i { font-size: 3rem; }
 .boton-grande.principal small { font-size: 1rem; }
 .boton-grande:not(.principal) { min-height: 140px; }
+
+/* ---------------- Configuración por secciones ---------------- */
+.giros-3 { grid-template-columns: repeat(3, 1fr); }
+.giros-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 575.98px) { .giros-3, .giros-4 { grid-template-columns: repeat(2, 1fr); } }
+.ajustes-nav { position: sticky; top: 80px; border-radius: var(--tw-radio); box-shadow: var(--tw-sombra); }
+.ajustes-nav .list-group-item { display: flex; align-items: center; gap: .85rem; padding: .85rem 1rem; border-color: var(--tw-borde); }
+.ajustes-nav .list-group-item > i { font-size: 1.3rem; color: var(--tw-azul); width: 1.5rem; text-align: center; }
+.ajustes-nav .list-group-item.active { background: var(--tw-azul); border-color: var(--tw-azul); }
+.ajustes-nav .list-group-item.active > i { color: #fff; }
+.ajustes-estado { color: var(--tw-texto-suave); display: block; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ajustes-nav .active .ajustes-estado { color: rgba(255, 255, 255, .8); }
+.ticket-muestra-caja { position: sticky; top: 80px; container-type: inline-size; }
+.ticket-muestra {
+    /* La letra se ajusta para que quepa el renglón completo del papel (--ancho letras). */
+    width: fit-content; max-width: 100%; margin: 0 auto; padding: 1.25rem 1rem; background: #fff; color: #111;
+    font-family: Consolas, "Courier New", monospace; line-height: 1.35; white-space: pre; overflow: hidden;
+    font-size: min(.85rem, calc((100cqw - 2.25rem) / (var(--ancho, 48) * .56)));
+    border: 1px solid var(--tw-borde); border-radius: 4px; box-shadow: var(--tw-sombra);
+    -webkit-mask: linear-gradient(#000 calc(100% - 10px), transparent);
+}
+.ticket-muestra .doble { font-size: 2em; line-height: 1.15; font-weight: 700; }
+.ticket-muestra .total { font-weight: 700; }
+.lista-avanzadas { list-style: none; padding: 0; margin: 0; display: grid; gap: .75rem; }
+.lista-avanzadas li { display: flex; gap: .75rem; align-items: flex-start; }
+.lista-avanzadas i { color: var(--tw-azul); font-size: 1.15rem; }
+.barra-guardar {
+    position: sticky; bottom: 0; z-index: 5; margin-top: 1.5rem; padding: .85rem 1.25rem;
+    display: flex; justify-content: flex-end; align-items: center; gap: 1rem;
+    background: rgba(255, 255, 255, .92); backdrop-filter: blur(6px);
+    border: 1px solid var(--tw-borde); border-radius: var(--tw-radio); box-shadow: var(--tw-sombra);
+}

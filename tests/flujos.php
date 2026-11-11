@@ -10,6 +10,43 @@ declare(strict_types=1);
 $raiz = dirname(__DIR__);
 
 /* ---------------------------------------------------------------------
+ *  Configuración por secciones.
+ * --------------------------------------------------------------------- */
+$srv = new ServidorPrueba($raiz);
+$nav = new Navegador($srv->url);
+try {
+    Pruebas::grupo('Configuración por secciones');
+    $nav->get('index.php');
+    $nav->enviar('bienvenida.php', ['giro' => 'licoreria', 'negocio_nombre' => 'Vinos Mario', 'productos' => 'ejemplos'], 'bienvenida.php');
+    $h = $nav->get('ajustes.php');
+    foreach (['negocio', 'ticket', 'impresora', 'correo', 'avanzado'] as $s) {
+        Pruebas::contiene('id="sec-' . $s . '"', $h, "tiene la sección $s");
+    }
+    Pruebas::verdadero((bool) preg_match('/id="sec-negocio"[^>]*|class="tab-pane fade show active" id="sec-negocio"/', $h)
+        && str_contains($h, 'class="tab-pane fade show active" id="sec-negocio"'), 'abre en Mi negocio');
+    Pruebas::contiene('Sin impresora', $h, 'la lista dice que no hay impresora');
+    Pruebas::contiene('Sin configurar', $h, 'y que el correo no está configurado');
+    Pruebas::contiene('Tequila blanco 750 ml', $h, 'la vista previa del ticket usa productos del giro');
+    Pruebas::contiene('class="tab-pane fade show active" id="sec-ticket"', $nav->get('ajustes.php?s=ticket'), '?s=ticket abre la sección Ticket');
+    Pruebas::contiene('class="tab-pane fade show active" id="sec-negocio"', $nav->get('ajustes.php?s=otra'), 'una sección que no existe abre Mi negocio');
+
+    $campos = ['giro' => 'licoreria', 'negocio_nombre' => 'Vinos Mario', 'negocio_datos' => "Calle 5\nTel. 555", 'ticket_pie' => 'Vuelva pronto',
+               'ticket_factura' => '', 'iva_ticket' => '1', 'impresora_tipo' => 'ninguna', 'papel' => '58', 'caracteres' => 'pc850', 'cortar_papel' => '1',
+               'imprimir_al_cobrar' => 'siempre', 'cajon_al_cobrar' => 'efectivo', 'cajon_pin' => '2', 'correo_seguridad' => 'ssl', 'funciones_avanzadas' => '1'];
+    $nav->enviar('ajustes.php', $campos + ['seccion' => 'ticket', 'accion' => 'guardar'], 'ajustes.php');
+    Pruebas::igual('/ajustes.php?s=ticket', parse_url((string) $nav->redireccion, PHP_URL_PATH) . '?' . parse_url((string) $nav->redireccion, PHP_URL_QUERY),
+        'al guardar regresa a la sección donde estabas');
+    Pruebas::igual(["Calle 5\nTel. 555", 'Vuelva pronto', '58', '1'],
+        array_map(fn($c) => $srv->valor('SELECT valor FROM ajustes WHERE clave = :c', [':c' => $c]), ['negocio_datos', 'ticket_pie', 'papel', 'funciones_avanzadas']),
+        'guardar desde Ticket conserva lo de las demás secciones');
+    $h = $nav->enviar('ajustes.php', ['impresora_tipo' => 'red', 'impresora_ip' => 'no-es-ip', 'seccion' => 'ticket'] + $campos, 'ajustes.php');
+    Pruebas::contiene('class="tab-pane fade show active" id="sec-impresora"', $h, 'un error abre la sección donde está el campo');
+    Pruebas::igual('ninguna', $srv->valor("SELECT valor FROM ajustes WHERE clave = 'impresora_tipo'"), 'y con error no se guarda nada');
+} finally {
+    $srv->detener();
+}
+
+/* ---------------------------------------------------------------------
  *  Sesión perdida: nunca se pierde lo escrito ni queda sin explicación.
  * --------------------------------------------------------------------- */
 $srv = new ServidorPrueba($raiz);
