@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Pie común: cierra la estructura, carga los scripts y muestra los avisos.
  * Una página puede definir $scripts = ['assets/js/ventas.js'] antes de incluirlo.

@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Etiquetas con código de barras: elegir productos y cuántas etiquetas,
  * y el formato (hoja carta o rollo de impresora de etiquetas).

@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 require_once __DIR__ . '/../includes/app.php';
 
 $id = filter_var($_GET['id'] ?? null, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]);

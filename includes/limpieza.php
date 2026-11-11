@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * TiendaWeb - Limpieza de la base y productos de ejemplo.
  *

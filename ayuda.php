@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Ayuda: cómo se usa el sistema, en pasos cortos y sin palabras técnicas.
  */

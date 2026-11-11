@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Registrar una compra a un proveedor: lo que llegó, a qué costo y si se
  * pagó con dinero de la caja. Suma al inventario y actualiza el costo.

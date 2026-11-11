@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * TiendaWeb - Envío de correos por SMTP (Gmail, Outlook, el del proveedor de Internet…).
  *

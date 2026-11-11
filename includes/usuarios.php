@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * TiendaWeb - Usuarios, inicio de sesión con PIN y permisos.
  *

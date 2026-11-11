@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Encabezado y menú lateral comunes.
  * Antes de incluirlo, cada página define:

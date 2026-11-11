@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * TiendaWeb - Devoluciones parciales (una o varias piezas de una venta).
  *

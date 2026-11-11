@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Pruebas de reglas de negocio puras (sin base de datos ni servidor).
  */

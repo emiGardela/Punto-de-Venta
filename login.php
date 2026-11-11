@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Inicio de sesión con PIN. Solo aparece cuando ya se creó algún usuario.
  */

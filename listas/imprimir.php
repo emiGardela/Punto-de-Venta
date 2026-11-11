@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Lista escolar imprimible (para entregar a los papás como cotización).
  */

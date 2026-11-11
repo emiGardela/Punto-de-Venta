@@ -1,3 +1,4 @@
+/* SPDX-License-Identifier: GPL-3.0-only */
 /* =====================================================================
    TiendaWeb - Punto de venta
    - Búsqueda por nombre o código (compatible con lectores USB tipo teclado)

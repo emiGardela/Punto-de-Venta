@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * TiendaWeb - Funciones de apoyo compartidas por todos los módulos.
  */

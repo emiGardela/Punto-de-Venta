@@ -1,4 +1,5 @@
-﻿; =====================================================================
+﻿; SPDX-License-Identifier: GPL-3.0-only
+; =====================================================================
 ;  TiendaWeb - Instalador para Windows (Inno Setup 6.3+ / 7)
 ;
 ;  Antes: arma la app con empaquetar\armar_app.ps1 (crea C:\xampp\TiendaWeb-escritorio).

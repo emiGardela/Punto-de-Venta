@@ -1,4 +1,5 @@
-﻿<#
+﻿# SPDX-License-Identifier: GPL-3.0-only
+<#
   TiendaWeb - Arma la app de escritorio con PHP Desktop.
 
   Uso (desde la carpeta del proyecto):

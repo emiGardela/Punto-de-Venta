@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Limpieza de la base (mantenimiento). Solo desde la consola de la
  * computadora de la tienda, con el Punto de venta cerrado. Desde la carpeta donde

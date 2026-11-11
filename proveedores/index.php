@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Proveedores: lista, alta y edición (en la misma pantalla).
  */

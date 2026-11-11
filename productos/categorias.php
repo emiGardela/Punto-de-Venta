@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Categorías de productos: alta, cambio de nombre y desactivar.
  * Nunca se borran (los productos y reportes las siguen usando).

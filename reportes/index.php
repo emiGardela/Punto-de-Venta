@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Reportes: ventas por periodo, métodos de pago, productos más vendidos,
  * utilidad bruta estimada e inventario. Las ventas canceladas nunca se

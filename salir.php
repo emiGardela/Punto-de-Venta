@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Cierra la sesión del usuario actual (por ejemplo, al cambiar de cajero).
  */

@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * TiendaWeb - Ajustes guardados en la base de datos (tabla "ajustes").
  *

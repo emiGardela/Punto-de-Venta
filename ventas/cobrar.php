@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Registra una venta (recibe JSON por POST, responde JSON).
  *

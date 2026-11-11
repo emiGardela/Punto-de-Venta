@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Búsqueda de productos para el punto de venta (responde JSON).
  *

@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Listas escolares: la lista de útiles de cada escuela y grado.
  * En el punto de venta se cargan completas con un clic.

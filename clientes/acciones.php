@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Acciones de crédito (POST):
  *   accion=abonar          cliente_id, monto, metodo_pago, nota   → permiso "credito"

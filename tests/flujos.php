@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Pruebas de punta a punta: un servidor de prueba con base propia y un
  * "navegador" que usa el sistema como lo haría el cajero.

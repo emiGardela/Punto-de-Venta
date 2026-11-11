@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Entrada de mercancía (lo que llegó del proveedor) o conteo físico (ajuste).
  *

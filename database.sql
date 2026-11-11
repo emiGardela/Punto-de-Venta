@@ -1,3 +1,4 @@
+-- SPDX-License-Identifier: GPL-3.0-only
 -- =====================================================================
 --  TiendaWeb - Punto de venta universal
 --  Esquema de la base de datos (SQLite 3.27+)

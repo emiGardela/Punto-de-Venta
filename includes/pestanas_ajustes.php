@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Pestañas de la sección Configuración (solo el dueño): configuración,
  * usuarios, respaldos y bitácora. Se incluye después del encabezado.

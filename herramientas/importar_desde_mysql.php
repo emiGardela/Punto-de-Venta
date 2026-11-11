@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Copia productos y ventas de la versión anterior (MySQL de XAMPP) a la
  * base SQLite de la app de escritorio. Se usa UNA sola vez, desde la consola:

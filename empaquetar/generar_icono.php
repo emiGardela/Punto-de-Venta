@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Genera empaquetar/tiendaweb.ico (el mismo logo que el favicon del sistema:
  * cuadro azul redondeado con una canasta blanca). No necesita GD.

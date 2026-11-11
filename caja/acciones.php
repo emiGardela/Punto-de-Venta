@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Acciones de caja (POST):
  *   accion=abrir       fondo                   → cualquier usuario (sin caja abierta no se vende)

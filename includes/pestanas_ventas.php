@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Pestañas de "Ventas hechas": las ventas y las facturas que pidieron los clientes.
  */

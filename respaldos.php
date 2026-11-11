@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Respaldos: descargar una copia de la base de datos, ver las copias
  * automáticas diarias y restaurar una copia anterior.

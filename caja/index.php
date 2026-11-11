@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Caja: abrir turno, entradas y salidas de efectivo, corte en vivo y cierre.
  */

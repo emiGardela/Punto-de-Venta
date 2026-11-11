@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Formulario de producto compartido por crear.php y editar.php.
  * Variables esperadas: $producto (arreglo con los valores), $errores (campo => mensaje),

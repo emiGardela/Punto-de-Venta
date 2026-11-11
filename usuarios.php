@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Usuarios: el dueño crea cajeros, les pone PIN y elige sus permisos.
  * Mientras no haya usuarios, cualquiera puede entrar aquí para crear al dueño.

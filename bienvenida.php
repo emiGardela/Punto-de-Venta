@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Asistente de primer uso: tipo y nombre del negocio, empezar vacío o con
  * productos de ejemplo, y usuario dueño con PIN.

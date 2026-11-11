@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Punto de venta: búsqueda (teclado o lector), carrito y cobro.
  * Toda la interacción está en assets/js/ventas.js.

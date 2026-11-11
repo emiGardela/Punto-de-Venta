@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Factura de una venta, de principio a fin:
  *   pedir (datos fiscales) → corregir → "ya la hice" (sube el XML y el PDF; el folio

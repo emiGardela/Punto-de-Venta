@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Configuración: datos del negocio, impresora de tickets ESC/POS y cajón.
  */

@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Restablece el PIN de un usuario (por ejemplo, si el dueño lo olvidó).
  * Solo funciona desde la consola de la computadora de la tienda:

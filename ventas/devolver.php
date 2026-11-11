@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Devolver una o varias piezas de una venta (devolución parcial).
  */

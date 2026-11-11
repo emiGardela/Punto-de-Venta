@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Activa o desactiva un producto. Nunca lo borra físicamente,
  * así se conserva el historial de ventas que lo incluye.

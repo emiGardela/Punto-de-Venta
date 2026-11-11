@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Estado de cuenta de un cliente: compras a crédito, abonos y saldo.
  */

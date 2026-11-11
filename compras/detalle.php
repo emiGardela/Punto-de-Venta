@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Detalle de una compra y su cancelación (regresa las existencias y, si se
  * pagó con dinero de la caja, registra la entrada del reembolso).

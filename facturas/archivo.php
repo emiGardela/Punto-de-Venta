@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Descarga el XML o el PDF guardado de una factura.
  */

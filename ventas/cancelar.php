@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Cancela una venta completada: registra el motivo y devuelve las existencias.
  * La venta no se borra. Una venta ya cancelada no puede cancelarse de nuevo,

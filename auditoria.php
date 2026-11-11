@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Bitácora de auditoría (solo el dueño): quién hizo qué y cuándo.
  */

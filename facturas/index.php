@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Facturas pedidas por los clientes y la factura global del mes.
  * Desde aquí se descarga todo para el contador o para hacerlas en el portal del SAT.

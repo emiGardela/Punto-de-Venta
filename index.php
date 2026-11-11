@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Panel principal (dashboard). Todos los indicadores salen de la base de datos.
  */

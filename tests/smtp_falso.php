@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Servidor de correo (SMTP) falso para las pruebas: no manda nada, solo
  * guarda cada mensaje recibido en un archivo .eml.

@@ -1,4 +1,5 @@
 <?php
+// SPDX-License-Identifier: GPL-3.0-only
 /**
  * Alta y edición de una lista escolar (nombre, escuela y artículos).
  */
