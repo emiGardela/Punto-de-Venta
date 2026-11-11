@@ -22,7 +22,7 @@ Punto de venta de escritorio para tiendas pequeñas de México: abarrotes, licor
 
 ### Para cualquier giro
 
-En el primer uso se elige el tipo de negocio. Eso cambia los productos de ejemplo, las categorías sugeridas y algunos textos; lo demás funciona igual para todos.
+En el primer uso se elige el tipo de negocio y, si hay, la impresora de tickets. Eso cambia los productos de ejemplo, las categorías sugeridas y algunos textos; lo demás funciona igual para todos.
 
 | Primer uso | Vender |
 |---|---|
@@ -31,6 +31,10 @@ En el primer uso se elige el tipo de negocio. Eso cambia los productos de ejempl
 | Productos | Reportes |
 |---|---|
 | ![Productos](docs/capturas/productos.png) | ![Reportes](docs/capturas/reportes.png) |
+
+La configuración va por secciones, y en la del ticket se ve cómo quedará impreso mientras escribes, con el mismo ancho de renglón que el papel:
+
+![Configuración del ticket](docs/capturas/configuracion.png)
 
 *Las capturas usan datos de ejemplo.*
 
