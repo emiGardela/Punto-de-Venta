@@ -12,7 +12,7 @@ declare(strict_types=1);
 // Nombre que aparece en la barra superior y en los tickets.
 const APP_NOMBRE   = 'Punto de venta';
 const APP_NEGOCIO  = '';   // nombre inicial; después se cambia en el menú Configuración
-const APP_VERSION  = '3.8.1';
+const APP_VERSION  = '3.8.2';
 
 // Zona horaria de México (sin horario de verano desde 2022).
 const APP_ZONA_HORARIA = 'America/Mexico_City';
