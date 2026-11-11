@@ -1,5 +1,5 @@
 =====================================================================
-  Punto de venta 3.8.2 - Para abarrotes, licorerías, papelerías y más
+  Punto de venta 3.8.3 - Para abarrotes, licorerías, papelerías y más
   App de escritorio para Windows (PHP 8 + SQLite + Bootstrap 5)
 =====================================================================
 

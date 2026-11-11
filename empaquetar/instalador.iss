@@ -14,7 +14,7 @@
 ; =====================================================================
 
 #define AppNombre   "Punto de venta"
-#define AppVersion  "3.8.2"
+#define AppVersion  "3.8.3"
 #define AppExe      "Punto de venta.exe"
 #define AppOrigen   "C:\xampp\TiendaWeb-escritorio"
 
