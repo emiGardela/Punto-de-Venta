@@ -1,0 +1,14 @@
+# Saltos de línea: en el repositorio todo va con LF; git decide al sacar los archivos.
+* text=auto eol=lf
+
+# Scripts de Windows con CRLF (PowerShell e Inno Setup los esperan así).
+*.ps1 text eol=crlf
+*.iss text eol=crlf
+*.bat text eol=crlf
+
+# Binarios: nunca se tocan.
+*.png    binary
+*.ico    binary
+*.sqlite binary
+*.woff   binary
+*.woff2  binary

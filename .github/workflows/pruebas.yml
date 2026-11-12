@@ -1,0 +1,44 @@
+# SPDX-License-Identifier: GPL-3.0-only
+# Corre todas las pruebas automáticas en cada cambio que se sube a GitHub.
+# Cada prueba levanta su propio servidor de PHP con una base temporal.
+name: Pruebas
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pruebas:
+    name: PHP ${{ matrix.php }} en ${{ matrix.sistema }}
+    runs-on: ${{ matrix.sistema }}
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        sistema: [ubuntu-latest, windows-latest]
+        php: ['8.3']
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Instalar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, pdo_sqlite, sqlite3
+          coverage: none
+          ini-values: date.timezone=America/Mexico_City
+
+      - name: Revisar la sintaxis de todos los archivos PHP
+        shell: bash
+        run: |
+          git ls-files '*.php' | while read -r archivo; do
+            php -l "$archivo" > /dev/null || exit 1
+          done
+
+      - name: Correr las pruebas
+        run: php tests/correr.php

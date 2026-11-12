@@ -1,5 +1,8 @@
 # Punto de venta
 
+[![Pruebas](https://github.com/emiGardela/Punto-de-Venta/actions/workflows/pruebas.yml/badge.svg)](https://github.com/emiGardela/Punto-de-Venta/actions/workflows/pruebas.yml)
+[![Licencia: GPL-3.0](https://img.shields.io/badge/licencia-GPL--3.0-blue.svg)](LICENSE)
+
 Punto de venta de escritorio para tiendas pequeñas de México: abarrotes, licorerías, papelerías o cualquier otro giro. Está pensado para que lo use alguien que no sabe de computadoras: botones grandes, pocos pasos y todo en español.
 
 > **English summary:** A desktop point-of-sale for small Mexican shops (grocery, liquor, stationery or any other store). PHP + SQLite, packaged as a Windows app with PHP Desktop (embedded Chromium) and an Inno Setup installer. Includes barcode sales, cash register shifts, inventory, store credit, Mexican VAT (IVA) per product, ESC/POS ticket printing, reports, daily backups and an end-to-end test suite.
@@ -65,6 +68,8 @@ php tests/correr.php
 ```
 
 Son pruebas unitarias y de punta a punta: cada una levanta su propio servidor con una base temporal y usa el sistema como lo haría un cajero (asistente, ventas, IVA, caja, devoluciones, crédito, giros y más). Nunca tocan los datos del negocio.
+
+En GitHub corren solas con cada cambio, en Linux y en Windows ([GitHub Actions](.github/workflows/pruebas.yml)).
 
 ## Armar el instalador
 
